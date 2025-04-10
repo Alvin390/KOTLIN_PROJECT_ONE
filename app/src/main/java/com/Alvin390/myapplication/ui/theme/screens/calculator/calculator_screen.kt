@@ -26,9 +26,11 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun Calculator_screen(modifier: Modifier = Modifier) {
+fun Calculator_screen(navController: NavHostController) {
         var fnum by remember { mutableStateOf(TextFieldValue("")) }
         var snum by remember { mutableStateOf(TextFieldValue("")) }
         var answer by remember { mutableStateOf("") }
@@ -104,5 +106,5 @@ fun Calculator_screen(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 private fun calc_pres() {
-    Calculator_screen()
+    Calculator_screen(rememberNavController())
 }
