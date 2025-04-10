@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ButtonDefaults
@@ -21,6 +22,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
@@ -46,6 +49,7 @@ fun Calculator_screen(navController: NavHostController) {
             fontSize = 20.sp,
             fontFamily = FontFamily.Monospace
         )
+
         OutlinedTextField(value = fnum, onValueChange = {fnum=it},
             label = { Text(text = "Enter First Number",
                 fontSize = 20.sp,
@@ -60,7 +64,24 @@ fun Calculator_screen(navController: NavHostController) {
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             placeholder = { Text(text = "Second Number") },
         )
-        OutlinedButton(onClick = {},
+        Text(text = "= $answer ",
+            fontSize = 30.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier
+                .padding(10.dp)
+                .align(Alignment.Start)
+
+        )
+        OutlinedButton(onClick = {
+            val myfnum=fnum.text.trim()
+            val mysnum=snum.text.trim()
+            if (myfnum.isEmpty()or mysnum.isEmpty()){
+                answer="Please Enter Both Numbers"
+            }
+            else{
+                answer=((myfnum.toDouble()+mysnum.toDouble())).toString()
+            }
+        },
             colors = ButtonDefaults.buttonColors(Color.White),
             modifier = Modifier.width(300.dp)) {
             Text(text = "+",
@@ -70,7 +91,16 @@ fun Calculator_screen(navController: NavHostController) {
                 )
 
         }
-        OutlinedButton(onClick = {},
+        OutlinedButton(onClick = {
+            val myfnum=fnum.text.trim()
+            val mysnum=snum.text.trim()
+            if (myfnum.isEmpty()or mysnum.isEmpty()){
+                answer="Please Enter Both Numbers"
+            }
+            else{
+                answer=((myfnum.toDouble()/mysnum.toDouble())).toString()
+            }
+        },
             colors = ButtonDefaults.buttonColors(Color.White),
             modifier = Modifier.width(300.dp)) {
             Text(text = "/",
@@ -80,7 +110,16 @@ fun Calculator_screen(navController: NavHostController) {
             )
 
         }
-        OutlinedButton(onClick = {},
+        OutlinedButton(onClick = {
+            val myfnum=fnum.text.trim()
+            val mysnum=snum.text.trim()
+            if (myfnum.isEmpty()or mysnum.isEmpty()){
+                answer="Please Enter Both Numbers"
+            }
+            else{
+                answer=((myfnum.toDouble()-mysnum.toDouble())).toString()
+            }
+        },
             colors = ButtonDefaults.buttonColors(Color.White),
             modifier = Modifier.width(300.dp)) {
             Text(text = "-",
@@ -90,7 +129,16 @@ fun Calculator_screen(navController: NavHostController) {
             )
 
         }
-        OutlinedButton(onClick = {},
+        OutlinedButton(onClick = {
+            val myfnum=fnum.text.trim()
+            val mysnum=snum.text.trim()
+            if (myfnum.isEmpty()or mysnum.isEmpty()){
+                answer="Please Enter Both Numbers"
+            }
+            else{
+                answer=((myfnum.toDouble()*mysnum.toDouble())).toString()
+            }
+        },
             colors = ButtonDefaults.buttonColors(Color.White),
             modifier = Modifier.width(300.dp)) {
             Text(text = "*",
@@ -100,11 +148,12 @@ fun Calculator_screen(navController: NavHostController) {
             )
 
         }
+
     }
 }
 
 @Preview
 @Composable
-private fun calc_pres() {
+private fun calc_prev() {
     Calculator_screen(rememberNavController())
 }
