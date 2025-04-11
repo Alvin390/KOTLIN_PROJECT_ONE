@@ -3,11 +3,15 @@ package com.Alvin390.myapplication.ui.theme.screens.calculator
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedButton
@@ -34,123 +38,163 @@ import androidx.navigation.compose.rememberNavController
 
 @Composable
 fun Calculator_screen(navController: NavHostController) {
-        var fnum by remember { mutableStateOf(TextFieldValue("")) }
-        var snum by remember { mutableStateOf(TextFieldValue("")) }
-        var answer by remember { mutableStateOf("") }
-    Column(verticalArrangement = Arrangement.SpaceEvenly,
+    var fnum by remember { mutableStateOf(TextFieldValue("")) }
+    var snum by remember { mutableStateOf(TextFieldValue("")) }
+    var answer by remember { mutableStateOf("") }
+    Column(
+        verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Gray)
-            ) { 
+            .padding(10.dp)
+    ) {
         Text(
             text = "Calculator",
             color = Color.Green,
             fontSize = 20.sp,
-            fontFamily = FontFamily.Monospace
+            fontFamily = FontFamily.Monospace,
+
         )
 
-        OutlinedTextField(value = fnum, onValueChange = {fnum=it},
-            label = { Text(text = "Enter First Number",
-                fontSize = 20.sp,
-                fontFamily = FontFamily.Serif,) },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        OutlinedTextField(
+            value = fnum, onValueChange = { fnum = it },
+            label = {
+                Text(
+                    text = "Enter First Number",
+                    fontSize = 20.sp,
+                    fontFamily = FontFamily.Serif,
+                modifier = Modifier.padding(10.dp))
+            },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             placeholder = { Text(text = "First Number") },
         )
-        OutlinedTextField(value = snum, onValueChange = {snum=it},
-            label = { Text(text = "Enter Second Number",
-                fontSize = 20.sp,
-                fontFamily = FontFamily.Serif,) },
+        OutlinedTextField(
+            value = snum, onValueChange = { snum = it },
+            label = {
+                Text(
+                    text = "Enter Second Number",
+                    fontSize = 20.sp,
+                    fontFamily = FontFamily.Serif,
+                    modifier = Modifier.padding(10.dp)
+                )
+            },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             placeholder = { Text(text = "Second Number") },
         )
-        Text(text = "= $answer ",
+        Text(
+            text = "= $answer ",
             fontSize = 30.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
-                .padding(10.dp)
+                .padding(15.dp)
                 .align(Alignment.Start)
 
         )
-        OutlinedButton(onClick = {
-            val myfnum=fnum.text.trim()
-            val mysnum=snum.text.trim()
-            if (myfnum.isEmpty()or mysnum.isEmpty()){
-                answer="Please Enter Both Numbers"
-            }
-            else{
-                answer=((myfnum.toDouble()+mysnum.toDouble())).toString()
-            }
-        },
-            colors = ButtonDefaults.buttonColors(Color.White),
-            modifier = Modifier.width(300.dp)) {
-            Text(text = "+",
-                fontFamily = FontFamily.Cursive,
-                fontSize = 30.sp,
-                color = Color.Black,
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding( top = 0.dp)
+        )
+        {
+            val buttonModifier= Modifier
+                .weight(0.8f)
+                .aspectRatio(1f)
+                .padding(2.dp)
+            OutlinedButton(
+                onClick = {
+                    val myfnum = fnum.text.trim()
+                    val mysnum = snum.text.trim()
+                    if (myfnum.isEmpty() or mysnum.isEmpty()) {
+                        answer = "Please Enter Both Numbers"
+                    } else {
+                        answer = ((myfnum.toDouble() + mysnum.toDouble())).toString()
+                    }
+                },
+                colors = ButtonDefaults.buttonColors(Color.White),
+                modifier = buttonModifier,
+                shape = RoundedCornerShape(8.dp)
+            ) {
+                Text(
+                    text = "+",
+                    fontFamily = FontFamily.Cursive,
+                    fontSize = 30.sp,
+                    color = Color.Black,
                 )
 
-        }
-        OutlinedButton(onClick = {
-            val myfnum=fnum.text.trim()
-            val mysnum=snum.text.trim()
-            if (myfnum.isEmpty()or mysnum.isEmpty()){
-                answer="Please Enter Both Numbers"
             }
-            else{
-                answer=((myfnum.toDouble()/mysnum.toDouble())).toString()
-            }
-        },
-            colors = ButtonDefaults.buttonColors(Color.White),
-            modifier = Modifier.width(300.dp)) {
-            Text(text = "/",
-                fontFamily = FontFamily.Cursive,
-                fontSize = 30.sp,
-                color = Color.Black,
-            )
+            OutlinedButton(
+                onClick = {
+                    val myfnum = fnum.text.trim()
+                    val mysnum = snum.text.trim()
+                    if (myfnum.isEmpty() or mysnum.isEmpty()) {
+                        answer = "Please Enter Both Numbers"
+                    } else {
+                        answer = ((myfnum.toDouble() / mysnum.toDouble())).toString()
+                    }
+                },
+                colors = ButtonDefaults.buttonColors(Color.White),
+                modifier = buttonModifier,
+                shape = RoundedCornerShape(8.dp)
+            ) {
+                Text(
+                    text = "/",
+                    fontFamily = FontFamily.Cursive,
+                    fontSize = 30.sp,
+                    color = Color.Black,
+                )
 
-        }
-        OutlinedButton(onClick = {
-            val myfnum=fnum.text.trim()
-            val mysnum=snum.text.trim()
-            if (myfnum.isEmpty()or mysnum.isEmpty()){
-                answer="Please Enter Both Numbers"
             }
-            else{
-                answer=((myfnum.toDouble()-mysnum.toDouble())).toString()
-            }
-        },
-            colors = ButtonDefaults.buttonColors(Color.White),
-            modifier = Modifier.width(300.dp)) {
-            Text(text = "-",
-                fontFamily = FontFamily.Cursive,
-                fontSize = 30.sp,
-                color = Color.Black,
-            )
+            OutlinedButton(
+                onClick = {
+                    val myfnum = fnum.text.trim()
+                    val mysnum = snum.text.trim()
+                    if (myfnum.isEmpty() or mysnum.isEmpty()) {
+                        answer = "Please Enter Both Numbers"
+                    } else {
+                        answer = ((myfnum.toDouble() - mysnum.toDouble())).toString()
+                    }
+                },
+                colors = ButtonDefaults.buttonColors(Color.White),
+                modifier = buttonModifier,
+                shape = RoundedCornerShape(8.dp)
+            ) {
+                Text(
+                    text = "-",
+                    fontFamily = FontFamily.Cursive,
+                    fontSize = 30.sp,
+                    color = Color.Black,
+                )
 
-        }
-        OutlinedButton(onClick = {
-            val myfnum=fnum.text.trim()
-            val mysnum=snum.text.trim()
-            if (myfnum.isEmpty()or mysnum.isEmpty()){
-                answer="Please Enter Both Numbers"
             }
-            else{
-                answer=((myfnum.toDouble()*mysnum.toDouble())).toString()
+                OutlinedButton(
+                    onClick = {
+                        val myfnum = fnum.text.trim()
+                        val mysnum = snum.text.trim()
+                        if (myfnum.isEmpty() or mysnum.isEmpty()) {
+                            answer = "Please Enter Both Numbers"
+                        } else {
+                            answer = ((myfnum.toDouble() * mysnum.toDouble())).toString()
+                        }
+                    },
+                    colors = ButtonDefaults.buttonColors(Color.White),
+                    modifier = buttonModifier,
+                    shape = RoundedCornerShape(8.dp)
+                ) {
+                    Text(
+                        text = "*",
+                        fontFamily = FontFamily.Cursive,
+                        fontSize = 30.sp,
+                        color = Color.Black,
+                    )
+
+                }
             }
-        },
-            colors = ButtonDefaults.buttonColors(Color.White),
-            modifier = Modifier.width(300.dp)) {
-            Text(text = "*",
-                fontFamily = FontFamily.Cursive,
-                fontSize = 30.sp,
-                color = Color.Black,
-            )
-
         }
-
     }
-}
 
 @Preview
 @Composable
