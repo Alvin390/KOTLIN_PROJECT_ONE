@@ -30,7 +30,7 @@ import androidx.navigation.compose.rememberNavController
 
 @Composable
 fun web_screen(navController: NavHostController) {
-    var url by remember { mutableStateOf("https://www.youtube.com/") }
+    var url by remember { mutableStateOf("") }
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -46,7 +46,7 @@ fun web_screen(navController: NavHostController) {
         )
         Spacer(modifier = Modifier.height(20.dp))
         OutlinedButton(
-            onClick = {url="https://www.youtube.com/"},
+            onClick = { url = "https://www.youtube.com/" },
             colors = ButtonDefaults.buttonColors(Color.White),
             modifier = Modifier.width(300.dp)
         ) {
@@ -56,16 +56,20 @@ fun web_screen(navController: NavHostController) {
                 fontSize = 30.sp,
                 color = Color.Black,
             )
-            if (url.isEmpty()){
-                AndroidView(factory = {context ->
-                    WebView(context).apply { WebViewClient()
-                    settings.javaScriptEnabled=true
-                    loadUrl(url)}
-                })
-            }
+
         }
     }
-}
+    if (url.isNotEmpty()) {
+        AndroidView(factory = { context ->
+            WebView(context).apply {
+                webViewClient = WebViewClient()
+                settings.javaScriptEnabled = true
+                loadUrl(url)
+                }
+            })
+        }
+    }
+
 
 @Preview
 @Composable
